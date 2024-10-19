@@ -49,6 +49,10 @@ String ?address = "hy";
 
     if (_w3mService.isConnected) {
       print("already connected");
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        // Modify the provider value by calling the provider's method
+        Provider.of<CountProvider>(context, listen: false).address(_w3mService.session?.address);
+      });
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const Homepage()),
@@ -84,12 +88,12 @@ String ?address = "hy";
       body:
       Consumer<CountProvider>(
         builder: (context,proname, child){
-          if(_w3mService.isConnected){
+          if(_w3mService.isConnected) {
             proname.walletaddress = _w3mService.session?.address;
             proname.address(_w3mService.session?.address);
             print("addres new address");
           }
-          proname.address(_w3mService.session?.address);
+
           proname.walletstatus =true;
           return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),

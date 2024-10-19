@@ -12,25 +12,13 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  final ScrollController _controller = ScrollController();
+  final TextEditingController _roomNameController = TextEditingController();
   String selectedRoom = '';
   int _selectedIndex = 0;
   late W3MService _w3mService;
 
   @override
-  void initState() {
-    super.initState();
-    _w3mService = W3MService(
-      network: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
-      chainId: 97,
-    );
-  }
 
-  void _connectWallet() async {
-    String ?userAddress = Provider.of<CountProvider>(context, listen: false).walletaddress;
-    // For now, just print the provider details
-    print('useraddress');
-  }
 
 
   void _onItemTapped(int index) {
@@ -68,34 +56,6 @@ class _HomepageState extends State<Homepage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title:Text("Home Page"),
-        backgroundColor: Colors.blueGrey.shade400,
-      ),
-      body: Consumer<CountProvider>(
-    builder: (context,proname, child) {
-      return Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-             Text("Message: ${proname.message}"),
-              ElevatedButton(
-                onPressed: () => proname.fetchMessage(),
-                child: Text("Get Message"),
-              ),
-            ],
-          ),
-        ),
-
-      );
-    }
-    ),
-
-
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {// Handle "Add" button tap
         },
@@ -131,6 +91,28 @@ class _HomepageState extends State<Homepage> {
 
       ),
 
+      appBar: AppBar(
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        title:Text("Home Page"),
+        backgroundColor: Colors.blueGrey.shade400,
+      ),
+      body: Consumer<CountProvider>(
+    builder: (context,proname, child) {
+      return Container(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+             Text("Address: ${proname.walletaddress}"),
+
+            ],
+          ),
+        ),
+
+      );
+    }
+    ),
 
     );
   }
